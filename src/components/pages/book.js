@@ -8,9 +8,11 @@ function Book() {
   const searchParams = new URLSearchParams(location.search);
   const serachTerm = encodeURIComponent(searchParams.get('serach'));
   //console.log(serachTerm, 'serachTerm');
-  let endPoint = '/books';
-  if(serachTerm && serachTerm !== ''){
+  let endPoint = '';
+  if(serachTerm && serachTerm !== 'null'){
     endPoint = `/books/search/${serachTerm}`;
+  }else{
+    endPoint = '/books';
   }
 
   const [books, setBooks] = useState([]);

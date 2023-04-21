@@ -35,7 +35,7 @@ function Header() {
                         <button className="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
                     </form>
                 </li>
-                <li><Link to="#"><span className="glyphicon glyphicon-log-in"></span> Login</Link></li>
+                <li><Link to="/login"><span className="glyphicon glyphicon-log-in"></span> Login</Link></li>
             </ul>
             </div>
         </div>

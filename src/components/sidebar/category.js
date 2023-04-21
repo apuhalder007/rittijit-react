@@ -7,7 +7,7 @@ function Categories() {
     const fetchCategories = async () => {
         const response = await fetch(`${process.env.REACT_APP_API_URL}/book/categories`);
         const data = await response.json();
-        console.log(data);
+        console.log(data, 'categories data');
         setCategories(data.categories);
     }
 
