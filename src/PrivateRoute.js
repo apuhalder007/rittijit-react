@@ -1,24 +1,21 @@
-import React, { useContext } from 'react';
-import { useNavigate, Navigate, Route } from 'react-router-dom';
-import { UserContext } from './userContext';
+import {useContext} from 'react';
+import { Navigate, Outlet } from "react-router-dom";
+//import Login from "./components/pages/login";
+import { UserContext } from "./userContext";
 
-const PrivateRoute = ({ component: Component, ...rest }) => {
-  const navigate = useNavigate();
-  const { userToken } = useContext(UserContext);
 
-  return (
-    <Route
-      {...rest}
-      render={(props) => {
-        return userToken ? (
-          <Component {...props} />
-        ) : (
-          <Navigate to={{ pathname: '/login', state: { from: props.location } }} />
-        );
-      }}
-    />
-  );
-};
+/*const userAuth = () => {  
+  return false;
+}*/
+
+
+const PrivateRoute = ()=>{
+    const { userToken } = useContext(UserContext);
+    console.log(userToken);
+    //const isAuth = userAuth();
+    //return isAuth ? <Outlet/> : <Login/>
+    return userToken ? <Outlet/> : <Navigate to='/login'/>
+
+}
 
 export default PrivateRoute;
-

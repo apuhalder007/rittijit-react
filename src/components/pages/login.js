@@ -1,11 +1,17 @@
 import {useState, useContext, useEffect} from 'react';
 import { UserContext } from '../../userContext';
+import {useNavigate, Navigate, Link} from 'react-router-dom';
 
 const Login = ()=>{
+    const navigate = useNavigate();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const { setUserToken } = useContext(UserContext);
-    let user = {email,password}
+    const { userToken, setUserToken } = useContext(UserContext);
+
+    useEffect(()=>{
+        if(userToken) navigate('/dashboard');
+    },[userToken])
+
     const handleSubmit = async (e)=>{
         e.preventDefault();
         console.log(email);
