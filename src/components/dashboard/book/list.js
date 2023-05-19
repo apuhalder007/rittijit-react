@@ -1,14 +1,52 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Link } from "react-router-dom";
+import { UserContext } from "../../../userContext";
 
 const BookList = () => {
+    const { userToken } = useContext(UserContext);
     const [books, setBooks] = useState([]);
   const getBooks = async () => {
-    const response = await fetch(`${process.env.REACT_APP_API_URL}/books`);
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/books`,
+    {
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": userToken
+        }
+    });
     const data = await response.json();
     console.log(data, 'books');
     setBooks(data.books);
     }
+
+    const deleteBook = async (e, id) => {
+        e.preventDefault();
+        const result = window.confirm("Want to delete?");
+        if (result) {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/book/delete/${id}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    "Authorization": userToken
+                }
+            });
+            const data = await response.json();
+            console.log(data);
+            getBooks();
+        }
+        
+    }
+
+    const updateStatus = async (e, id, currentStatus) => {
+        e.preventDefault();
+        let status = '';
+        if (currentStatus === 'active') {
+            status = 'inactive';
+        }else{
+            status = 'active';
+        }
+    }
+        
+
     useEffect(() => {
         getBooks();
     }, []);
@@ -25,6 +63,7 @@ const BookList = () => {
                     <th>Title</th>
                     <th>Author</th>
                     <th>Publisher</th>
+                    <th>Status</th>
                     <th>Date</th>
                     <th>Action</th>
                 </tr>
@@ -36,13 +75,14 @@ const BookList = () => {
                                 <td>{book.name}</td>
                                 <td>{book.author}</td>
                                 <td>{book.publisher}</td>
+                                <td>{book.status}</td>
                                 <td>{book.createdAt}</td>
                                 <td>
                                     <Link to={`/dashboard/books/edit/${book._id}`}><i className="fa fa-edit"></i></Link>
                                     &nbsp;|&nbsp;
-                                    <Link to={`/dashboard/books/delete/${book._id}`}><i className="fa fa-trash"></i></Link>
+                                    <Link onClick={(e)=>deleteBook(e, book._id)}><i className="fa fa-trash"></i></Link>
                                     &nbsp;|&nbsp;
-                                    <Link to={`/dashboard/books/status/${book._id}`}><i className="fa fa-eye-slash"></i></Link>
+                                    <Link onClick={(e)=>updateStatus(e, book._id, book.status)}><i className="fa fa-eye-slash"></i></Link>
                                 </td>
                             </tr>
                         ))
