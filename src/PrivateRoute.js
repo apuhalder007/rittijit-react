@@ -1,7 +1,7 @@
 import {useContext} from 'react';
 import { Navigate, Outlet } from "react-router-dom";
 //import Login from "./components/pages/login";
-import { UserContext } from "./userContext";
+import { UserContext } from "./context/userContext";
 
 
 /*const userAuth = () => {  

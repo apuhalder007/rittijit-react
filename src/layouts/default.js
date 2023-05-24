@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
-import { UserContext } from "../userContext";
+import { UserContext } from "../context/userContext";
 import Header from '../components/header';
 import Footer from '../components/footer';
 
